@@ -22,12 +22,27 @@ export default function Table({ difficult }) {
 
   const handleGameOver = () => {
     console.log("Game Over");
-    setTimeout(() => {
-      window.location.reload("/");
-    }, 1500);
+    // setTimeout(() => {
+    //   window.location.reload("/");
+    // }, 1500);
   };
 
-  const table = [];
+  const countNearbyMines = (i, j, minePositions) => {
+    let count = 0;
+    for (let row = i - 1; row <= i + 1; row++) {
+      for (let col = j - 1; col <= j + 1; col++) {
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+          const index = row * cols + col;
+          if (minePositions.includes(index)) {
+            count++;
+          }
+        }
+      }
+    }
+    return count;
+  };
+
+  let table = [];
   const minePositions = generateMinePositions();
 
   for (let i = 0; i < rows; i++) {
@@ -35,8 +50,14 @@ export default function Table({ difficult }) {
     for (let j = 0; j < cols; j++) {
       const cellIndex = i * cols + j;
       const hasMine = minePositions.includes(cellIndex);
+      const nearbyMines = countNearbyMines(i, j, minePositions);
       row.push(
-        <Cell key={`${i}-${j}`} hasMine={hasMine} onGameOver={handleGameOver} />
+        <Cell
+          key={`${i}-${j}`}
+          hasMine={hasMine}
+          nearbyMines={nearbyMines}
+          onGameOver={handleGameOver}
+        />
       );
     }
     table.push(

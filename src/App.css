@@ -1,5 +1,24 @@
 .app {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 25px;
+}
+
+.buttons button {
+  font-size: 20px;
+  margin: 0 10px;
+  padding: 5px 10px;
+}
+.buttons button:hover {
+  cursor: pointer;
 }
