@@ -1,12 +1,17 @@
 import React from "react";
 import "../styles/cell.css";
 
-export default function Cell({ hasMine }) {
+export default function Cell({ hasMine, onGameOver }) {
   const [isRevealed, setIsRevealed] = React.useState(false);
   const [isFlagged, setIsFlagged] = React.useState(false);
 
   const handleCellClick = () => {
-    setIsRevealed(true);
+    if (hasMine) {
+      setIsRevealed(true);
+      onGameOver();
+    } else {
+      setIsRevealed(true);
+    }
   };
 
   const handleCellRightClick = (event) => {

@@ -20,6 +20,13 @@ export default function Table({ difficult }) {
     return positions;
   };
 
+  const handleGameOver = () => {
+    console.log("Game Over");
+    setTimeout(() => {
+      window.location.reload("/");
+    }, 1500);
+  };
+
   const table = [];
   const minePositions = generateMinePositions();
 
@@ -28,7 +35,9 @@ export default function Table({ difficult }) {
     for (let j = 0; j < cols; j++) {
       const cellIndex = i * cols + j;
       const hasMine = minePositions.includes(cellIndex);
-      row.push(<Cell key={`${i}-${j}`} hasMine={hasMine} />);
+      row.push(
+        <Cell key={`${i}-${j}`} hasMine={hasMine} onGameOver={handleGameOver} />
+      );
     }
     table.push(
       <div key={i} className="row">
