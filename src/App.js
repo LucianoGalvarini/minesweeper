@@ -2,9 +2,10 @@ import "./App.css";
 import Table from "./components/Table";
 
 function App() {
+  const difficult = "hard";
   return (
     <div className="App">
-      <Table />
+      <Table difficult={difficult} />
     </div>
   );
 }
