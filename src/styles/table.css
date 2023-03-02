@@ -30,6 +30,10 @@
   color: blue;
 }
 
+.gameWon {
+  color: #d38a01;
+}
+
 .gameOver {
   color: #dd2222;
 }

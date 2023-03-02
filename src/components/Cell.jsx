@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import "../styles/cell.css";
 
 export default function Cell({
@@ -8,8 +8,8 @@ export default function Cell({
   temporizador,
   onGameStart,
 }) {
-  const [isRevealed, setIsRevealed] = React.useState(false);
-  const [isFlagged, setIsFlagged] = React.useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isFlagged, setIsFlagged] = useState(false);
 
   const handleCellClick = () => {
     if (hasMine) {

@@ -10,8 +10,10 @@ export default function Table({ difficult }) {
   const cols = levelSelected.cols;
   const mines = levelSelected.mines;
 
-  const [gameOver, setGameOver] = useState(false);
   const [gameStart, setGameStart] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+
   const [minePositions, setMinePositions] = useState([]);
 
   useEffect(() => {
@@ -28,6 +30,10 @@ export default function Table({ difficult }) {
 
     generateMinePositions();
   }, [mines, rows, cols]);
+
+  function handleGameWon() {
+    setGameWon(true);
+  }
 
   function handleGameOver() {
     setGameOver(true);
@@ -97,6 +103,8 @@ export default function Table({ difficult }) {
           <div>
             {gameOver ? (
               <h2 className="gameOver">GAME OVER</h2>
+            ) : gameWon ? (
+              <h2 className="gameWon">YOU WIN!</h2>
             ) : (
               <h2 className="playing">PLAYING</h2>
             )}
