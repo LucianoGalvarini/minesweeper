@@ -37,11 +37,11 @@ export default function Cell({
           1: { color: "#0000FF" },
           2: { color: "#008000" },
           3: { color: "#FF0000" },
-          4: { color: "#800080" },
-          5: { color: "#8B0000" },
-          6: { color: "#008080" },
-          7: { color: "#000000" },
-          8: { color: "#808080" },
+          4: { color: "#020082" },
+          5: { color: "#7c0000" },
+          6: { color: "#077984" },
+          7: { color: "#a8060c" },
+          8: { color: "#ae040f" },
         };
         return (
           <span
