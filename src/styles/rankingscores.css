@@ -1,0 +1,19 @@
+table {
+  border-collapse: collapse;
+  border: 2px solid #ccc;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  max-height: 400px;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+tr {
+  background-color: #999;
+}

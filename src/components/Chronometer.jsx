@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/chronometer.css";
+import { formatearTiempo } from "../utilities/functions";
 
 export default function Chronometer({ action }) {
   const [tiempoActual, setTiempoActual] = useState(0);
@@ -33,15 +34,6 @@ export default function Chronometer({ action }) {
       detenerCronometro();
     }
   }, [action]);
-
-  function formatearTiempo(segundos) {
-    const horas = Math.floor(segundos / 3600);
-    const minutos = Math.floor((segundos % 3600) / 60);
-    const segundosRestantes = segundos % 60;
-    return `${horas.toString().padStart(2, "0")}:${minutos
-      .toString()
-      .padStart(2, "0")}:${segundosRestantes.toString().padStart(2, "0")}`;
-  }
 
   return <h2 className="chronometer">{formatearTiempo(tiempoActual)}</h2>;
 }

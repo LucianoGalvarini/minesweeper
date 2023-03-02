@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import Cell from "./Cell";
 import "../styles/table.css";
 import { MINESWEEPER_LEVELS } from "../utilities/constants";
-import Chronometer from "./Chronometer";
 
-export default function Table({ difficult }) {
+export default function Table({
+  difficult,
+  handleGameWon,
+  handleGameOver,
+  handleGameStart,
+  temporizador,
+  handleScores,
+}) {
   const levelSelected = MINESWEEPER_LEVELS[difficult];
   const rows = levelSelected.rows;
   const cols = levelSelected.cols;
   const mines = levelSelected.mines;
-
-  const [gameStart, setGameStart] = useState(false);
-  const [gameWon, setGameWon] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
 
   const [minePositions, setMinePositions] = useState([]);
 
@@ -31,18 +33,6 @@ export default function Table({ difficult }) {
     generateMinePositions();
   }, [mines, rows, cols]);
 
-  function handleGameWon() {
-    setGameWon(true);
-  }
-
-  function handleGameOver() {
-    setGameOver(true);
-  }
-
-  function handleGameStart() {
-    setGameStart(true);
-  }
-
   const countNearbyMines = (i, j, minePositions) => {
     let count = 0;
     for (let row = i - 1; row <= i + 1; row++) {
@@ -57,12 +47,6 @@ export default function Table({ difficult }) {
     }
     return count;
   };
-
-  const [temp, setTemp] = useState("");
-
-  function temporizador(props) {
-    setTemp(props);
-  }
 
   let table = [];
 
@@ -90,31 +74,5 @@ export default function Table({ difficult }) {
     );
   }
 
-  return (
-    <div className="tableComponent">
-      <div className="headerTable">
-        {!gameStart ? (
-          <h3 className="startPlaying">
-            Click on any cell
-            <br />
-            to start playing
-          </h3>
-        ) : (
-          <div>
-            {gameOver ? (
-              <h2 className="gameOver">GAME OVER</h2>
-            ) : gameWon ? (
-              <h2 className="gameWon">YOU WIN!</h2>
-            ) : (
-              <h2 className="playing">PLAYING</h2>
-            )}
-          </div>
-        )}
-
-        <Chronometer action={temp} />
-      </div>
-
-      <div className="table">{table}</div>
-    </div>
-  );
+  return <div className="table">{table}</div>;
 }
