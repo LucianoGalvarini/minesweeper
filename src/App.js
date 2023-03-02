@@ -4,7 +4,7 @@ import Table from "./components/Table";
 
 function App() {
   const levels = ["easy", "medium", "hard"];
-  const [difficult, setDifficult] = useState("medium");
+  const [difficult, setDifficult] = useState("");
   const [tableKey, setTableKey] = useState(0);
 
   function difficultSelected(difficult) {
@@ -14,6 +14,7 @@ function App() {
 
   return (
     <div className="app">
+      <h1>MINESWEEPER</h1>
       <div className="options">
         <div className="buttons">
           {levels.map((level) => (
@@ -27,11 +28,17 @@ function App() {
             </button>
           ))}
         </div>
-        <p>
-          Difficult: <strong>{difficult}</strong>{" "}
-        </p>
+        {(difficult !== "" && (
+          <p>
+            Difficult: <strong>{difficult}</strong>
+          </p>
+        )) || (
+          <p>
+            Difficult: <strong>unselected</strong>
+          </p>
+        )}
       </div>
-      <Table difficult={difficult} key={tableKey} />
+      {difficult !== "" && <Table difficult={difficult} key={tableKey} />}
     </div>
   );
 }

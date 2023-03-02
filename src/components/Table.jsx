@@ -3,7 +3,7 @@ import Cell from "./Cell";
 import "../styles/table.css";
 import { MINESWEEPER_LEVELS } from "../utilities/constants";
 
-export default function Table({ difficult }) {
+export default function Table({ difficult, key }) {
   const levelSelected = MINESWEEPER_LEVELS[difficult];
   const rows = levelSelected.rows;
   const cols = levelSelected.cols;
@@ -67,5 +67,9 @@ export default function Table({ difficult }) {
     );
   }
 
-  return <div className="table">{table}</div>;
+  return (
+    <div className="table" key={key}>
+      {table}
+    </div>
+  );
 }
