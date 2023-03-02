@@ -1,22 +1,31 @@
 import React from "react";
 import "../styles/cell.css";
 
-export default function Cell({ hasMine, nearbyMines, onGameOver }) {
+export default function Cell({
+  hasMine,
+  nearbyMines,
+  onGameOver,
+  temporizador,
+  onGameStart,
+}) {
   const [isRevealed, setIsRevealed] = React.useState(false);
   const [isFlagged, setIsFlagged] = React.useState(false);
 
   const handleCellClick = () => {
     if (hasMine) {
-      setIsRevealed(true);
+      temporizador("stop");
       onGameOver();
     } else {
-      setIsRevealed(true);
+      temporizador("start");
     }
+    onGameStart();
+    setIsRevealed(true);
   };
 
-  const handleCellRightClick = (event) => {
-    event.preventDefault();
+  const handleCellRightClick = (e) => {
+    e.preventDefault();
     setIsFlagged(!isFlagged);
+    temporizador("start");
   };
 
   const renderContent = () => {
@@ -34,9 +43,7 @@ export default function Cell({ hasMine, nearbyMines, onGameOver }) {
 
   return (
     <div
-      className={`cell ${isRevealed ? "revealed" : ""} ${
-        isFlagged ? "flagged" : ""
-      }`}
+      className={`cell ${isRevealed ? "revealed" : ""}`}
       onClick={handleCellClick}
       onContextMenu={handleCellRightClick}
     >

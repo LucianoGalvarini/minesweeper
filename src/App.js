@@ -28,16 +28,17 @@ function App() {
             </button>
           ))}
         </div>
-        {(difficult !== "" && (
+        {difficult !== "" ? (
           <p>
             Difficult: <strong>{difficult}</strong>
           </p>
-        )) || (
+        ) : (
           <p>
             Difficult: <strong>unselected</strong>
           </p>
         )}
       </div>
+
       {difficult !== "" && <Table difficult={difficult} key={tableKey} />}
     </div>
   );

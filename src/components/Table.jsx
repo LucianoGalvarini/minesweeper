@@ -1,31 +1,41 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Cell from "./Cell";
 import "../styles/table.css";
 import { MINESWEEPER_LEVELS } from "../utilities/constants";
+import Chronometer from "./Chronometer";
 
-export default function Table({ difficult, key }) {
+export default function Table({ difficult }) {
   const levelSelected = MINESWEEPER_LEVELS[difficult];
   const rows = levelSelected.rows;
   const cols = levelSelected.cols;
   const mines = levelSelected.mines;
 
-  const generateMinePositions = () => {
-    const positions = [];
-    while (positions.length < mines) {
-      const randomPosition = Math.floor(Math.random() * (rows * cols));
-      if (!positions.includes(randomPosition)) {
-        positions.push(randomPosition);
-      }
-    }
-    return positions;
-  };
+  const [gameOver, setGameOver] = useState(false);
+  const [gameStart, setGameStart] = useState(false);
+  const [minePositions, setMinePositions] = useState([]);
 
-  const handleGameOver = () => {
-    console.log("Game Over");
-    // setTimeout(() => {
-    //   window.location.reload("/");
-    // }, 1500);
-  };
+  useEffect(() => {
+    const generateMinePositions = () => {
+      const positions = [];
+      while (positions.length < mines) {
+        const randomPosition = Math.floor(Math.random() * (rows * cols));
+        if (!positions.includes(randomPosition)) {
+          positions.push(randomPosition);
+        }
+      }
+      console.log(positions);
+      return positions;
+    };
+    setMinePositions(generateMinePositions());
+  }, [rows, cols, mines]);
+
+  function handleGameOver() {
+    setGameOver(true);
+  }
+
+  function handleGameStart() {
+    setGameStart(true);
+  }
 
   const countNearbyMines = (i, j, minePositions) => {
     let count = 0;
@@ -42,8 +52,13 @@ export default function Table({ difficult, key }) {
     return count;
   };
 
+  const [temp, setTemp] = useState("");
+
+  function temporizador(props) {
+    setTemp(props);
+  }
+
   let table = [];
-  const minePositions = generateMinePositions();
 
   for (let i = 0; i < rows; i++) {
     const row = [];
@@ -57,6 +72,8 @@ export default function Table({ difficult, key }) {
           hasMine={hasMine}
           nearbyMines={nearbyMines}
           onGameOver={handleGameOver}
+          temporizador={temporizador}
+          onGameStart={handleGameStart}
         />
       );
     }
@@ -68,8 +85,28 @@ export default function Table({ difficult, key }) {
   }
 
   return (
-    <div className="table" key={key}>
-      {table}
+    <div className="tableComponent">
+      <div className="headerTable">
+        {!gameStart ? (
+          <h3 className="startPlaying">
+            Click on any cell
+            <br />
+            to start playing
+          </h3>
+        ) : (
+          <div>
+            {gameOver ? (
+              <h2 className="gameOver">GAME OVER</h2>
+            ) : (
+              <h2 className="playing">PLAYING</h2>
+            )}
+          </div>
+        )}
+
+        <Chronometer action={temp} />
+      </div>
+
+      <div className="table">{table}</div>
     </div>
   );
 }

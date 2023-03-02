@@ -20,6 +20,8 @@
 
 .app p {
   color: #666;
+  padding: 5px 10px;
+  margin: 5px;
 }
 
 .options {
