@@ -15,7 +15,7 @@ export default function Table({ difficult }) {
   const [minePositions, setMinePositions] = useState([]);
 
   useEffect(() => {
-    const generateMinePositions = () => {
+    function generateMinePositions() {
       const positions = [];
       while (positions.length < mines) {
         const randomPosition = Math.floor(Math.random() * (rows * cols));
@@ -23,11 +23,11 @@ export default function Table({ difficult }) {
           positions.push(randomPosition);
         }
       }
-      console.log(positions);
-      return positions;
-    };
-    setMinePositions(generateMinePositions());
-  }, [rows, cols, mines]);
+      setMinePositions(positions);
+    }
+
+    generateMinePositions();
+  }, [mines, rows, cols]);
 
   function handleGameOver() {
     setGameOver(true);

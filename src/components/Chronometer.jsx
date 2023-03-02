@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "../styles/chronometer.css";
 
 export default function Chronometer({ action }) {
-  console.log(action);
   const [tiempoActual, setTiempoActual] = useState(0);
   const [corriendo, setCorriendo] = useState(false);
 

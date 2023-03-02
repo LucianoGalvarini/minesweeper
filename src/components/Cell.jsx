@@ -33,7 +33,24 @@ export default function Cell({
       if (hasMine) {
         return "💣";
       } else if (nearbyMines > 0) {
-        return nearbyMines;
+        const numberStyles = {
+          1: { color: "#0000FF" },
+          2: { color: "#008000" },
+          3: { color: "#FF0000" },
+          4: { color: "#800080" },
+          5: { color: "#8B0000" },
+          6: { color: "#008080" },
+          7: { color: "#000000" },
+          8: { color: "#808080" },
+        };
+        return (
+          <span
+            style={numberStyles[nearbyMines]}
+            className={`cell revealed ${nearbyMines}`}
+          >
+            {nearbyMines}
+          </span>
+        );
       }
     } else if (isFlagged) {
       return "🚩";
