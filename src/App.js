@@ -5,9 +5,11 @@ import Table from "./components/Table";
 function App() {
   const levels = ["easy", "medium", "hard"];
   const [difficult, setDifficult] = useState("medium");
+  const [tableKey, setTableKey] = useState(0);
 
   function difficultSelected(difficult) {
     setDifficult(difficult);
+    setTableKey(tableKey + 1);
   }
 
   return (
@@ -29,7 +31,7 @@ function App() {
           Difficult: <strong>{difficult}</strong>{" "}
         </p>
       </div>
-      <Table difficult={difficult} />
+      <Table difficult={difficult} key={tableKey} />
     </div>
   );
 }
