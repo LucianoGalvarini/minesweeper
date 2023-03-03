@@ -25,9 +25,15 @@ export default function Cell({
 
   const handleCellRightClick = (e) => {
     e.preventDefault();
-    setIsFlagged(!isFlagged);
-    temporizador("start");
-    handleRemainingMines(-1);
+    if (!isRevealed) {
+      setIsFlagged(!isFlagged);
+      temporizador("start");
+      if (!isFlagged) {
+        handleRemainingMines(-1);
+      } else {
+        handleRemainingMines(1);
+      }
+    }
   };
 
   const renderContent = () => {

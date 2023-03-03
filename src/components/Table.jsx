@@ -32,7 +32,6 @@ export default function Table({
         }
       }
       setMinePositions(positions);
-      console.log(positions);
     }
 
     generateMinePositions();
