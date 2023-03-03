@@ -3,6 +3,8 @@ import "./App.css";
 import Table from "./components/Table";
 import Chronometer from "./components/Chronometer";
 import RankingScores from "./components/RankingScores";
+import Message from "./components/Message";
+import Button from "./components/Button";
 
 function App() {
   const levels = ["easy", "medium", "hard"];
@@ -12,15 +14,12 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [temp, setTemp] = useState("");
-
-  const scores = [
-    {
-      time: 1241,
-    },
-  ];
+  const [scores, setScores] = useState([]);
 
   function handleScores(score) {
-    scores.push(score);
+    const newScore = { time: score };
+    const newScores = [...scores, newScore].sort((a, b) => a.time - b.time);
+    setScores(newScores);
   }
 
   function difficultSelected(difficult) {
@@ -44,6 +43,13 @@ function App() {
     setTemp(props);
   }
 
+  function handleReset() {
+    setGameStart(false);
+    setGameWon(false);
+    setGameOver(false);
+    setTemp("reset");
+  }
+
   return (
     <div className="app">
       <h1>MINESWEEPER</h1>
@@ -52,15 +58,15 @@ function App() {
           <div className="buttons">
             <p>Choose the difficulty:</p>
             <div>
-              {levels.map((level) => (
-                <button
-                  key={level}
-                  onClick={() => {
-                    difficultSelected(level);
+              {levels.map((level, index) => (
+                <Button
+                  key={index}
+                  level={level}
+                  difficultSelected={difficultSelected}
+                  handleReset={() => {
+                    handleReset();
                   }}
-                >
-                  {level}
-                </button>
+                />
               ))}
             </div>
           </div>
@@ -76,24 +82,23 @@ function App() {
             )}
           </div>
           {!gameStart ? (
-            <h3 className="startPlaying">
-              Click on any cell
-              <br />
-              to start playing
-            </h3>
+            <Message
+              msg={`Click on any cell to start playing`}
+              styleClass={"startPlaying"}
+            />
           ) : (
             <div>
               {gameOver ? (
-                <h2 className="gameOver">GAME OVER</h2>
+                <Message msg={"GAME OVER"} styleClass={"gameOver"} />
               ) : gameWon ? (
-                <h2 className="gameWon">YOU WIN!</h2>
+                <Message msg={"YOU WIN!"} styleClass={"gameWon"} />
               ) : (
-                <h2 className="playing">PLAYING</h2>
+                <Message msg={"PLAYING"} styleClass={"playing"} />
               )}
             </div>
           )}
 
-          <Chronometer action={temp} />
+          <Chronometer action={temp} handleScores={handleScores} />
 
           <div className="scores">
             <h2>Ranking scores</h2>
@@ -109,7 +114,6 @@ function App() {
             handleGameStart={handleGameStart}
             handleGameOver={handleGameOver}
             temporizador={temporizador}
-            handleScores={handleScores}
           />
         )}
       </div>

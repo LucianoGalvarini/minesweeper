@@ -9,7 +9,6 @@ export default function Table({
   handleGameOver,
   handleGameStart,
   temporizador,
-  handleScores,
 }) {
   const levelSelected = MINESWEEPER_LEVELS[difficult];
   const rows = levelSelected.rows;

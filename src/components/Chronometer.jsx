@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../styles/chronometer.css";
 import { formatearTiempo } from "../utilities/functions";
 
-export default function Chronometer({ action }) {
+export default function Chronometer({ action, handleScores, won }) {
   const [tiempoActual, setTiempoActual] = useState(0);
   const [corriendo, setCorriendo] = useState(false);
 
@@ -27,11 +27,23 @@ export default function Chronometer({ action }) {
     setCorriendo(false);
   }
 
+  function reiniciarCronometro() {
+    setTiempoActual(0);
+    setCorriendo(false);
+  }
+
   useEffect(() => {
+    if (won) handleScores(tiempoActual);
+
     if (action === "start") {
       iniciarCronometro();
     } else if (action === "stop") {
       detenerCronometro();
+      if (tiempoActual > 0) {
+        handleScores(tiempoActual);
+      }
+    } else if (action === "reset") {
+      reiniciarCronometro();
     }
   }, [action]);
 
