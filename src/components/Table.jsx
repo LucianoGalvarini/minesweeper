@@ -14,8 +14,13 @@ export default function Table({
   const rows = levelSelected.rows;
   const cols = levelSelected.cols;
   const mines = levelSelected.mines;
-
   const [minePositions, setMinePositions] = useState([]);
+
+  const [remainingMines, setRemainingMines] = useState(mines);
+
+  function handleRemainingMines(prop) {
+    setRemainingMines(remainingMines + prop);
+  }
 
   useEffect(() => {
     function generateMinePositions() {
@@ -27,6 +32,7 @@ export default function Table({
         }
       }
       setMinePositions(positions);
+      console.log(positions);
     }
 
     generateMinePositions();
@@ -63,6 +69,7 @@ export default function Table({
           onGameOver={handleGameOver}
           temporizador={temporizador}
           onGameStart={handleGameStart}
+          handleRemainingMines={handleRemainingMines}
         />
       );
     }
@@ -73,5 +80,12 @@ export default function Table({
     );
   }
 
-  return <div className="table">{table}</div>;
+  return (
+    <div>
+      <div className="table">{table}</div>
+      <div>
+        <h2>💣 {remainingMines}</h2>
+      </div>
+    </div>
+  );
 }

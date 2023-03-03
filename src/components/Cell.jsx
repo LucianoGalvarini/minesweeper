@@ -7,6 +7,7 @@ export default function Cell({
   onGameOver,
   temporizador,
   onGameStart,
+  handleRemainingMines,
 }) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
@@ -26,6 +27,7 @@ export default function Cell({
     e.preventDefault();
     setIsFlagged(!isFlagged);
     temporizador("start");
+    handleRemainingMines(-1);
   };
 
   const renderContent = () => {
