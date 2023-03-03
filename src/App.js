@@ -106,7 +106,7 @@ function App() {
           </div>
         </div>
 
-        {difficult !== "" && (
+        {difficult !== "" ? (
           <Table
             difficult={difficult}
             key={tableKey}
@@ -115,6 +115,8 @@ function App() {
             handleGameOver={handleGameOver}
             temporizador={temporizador}
           />
+        ) : (
+          <h1>Choose a difficulty</h1>
         )}
       </div>
     </div>
