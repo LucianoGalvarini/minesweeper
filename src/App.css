@@ -92,3 +92,10 @@
   border-top: 1px solid #666;
   min-height: 55vh;
 }
+
+.divTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

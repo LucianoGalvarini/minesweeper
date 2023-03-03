@@ -106,18 +106,20 @@ function App() {
           </div>
         </div>
 
-        {difficult !== "" ? (
-          <Table
-            difficult={difficult}
-            key={tableKey}
-            handleGameWon={handleGameWon}
-            handleGameStart={handleGameStart}
-            handleGameOver={handleGameOver}
-            temporizador={temporizador}
-          />
-        ) : (
-          <h1>Choose a difficulty</h1>
-        )}
+        <div className="divTable">
+          {difficult !== "" ? (
+            <Table
+              difficult={difficult}
+              key={tableKey}
+              handleGameWon={handleGameWon}
+              handleGameStart={handleGameStart}
+              handleGameOver={handleGameOver}
+              temporizador={temporizador}
+            />
+          ) : (
+            <h1>Choose a difficulty</h1>
+          )}
+        </div>
       </div>
     </div>
   );
