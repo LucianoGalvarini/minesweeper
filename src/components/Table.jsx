@@ -14,13 +14,9 @@ export default function Table({
   const rows = levelSelected.rows;
   const cols = levelSelected.cols;
   const mines = levelSelected.mines;
+
   const [minePositions, setMinePositions] = useState([]);
-
   const [remainingMines, setRemainingMines] = useState(mines);
-
-  function handleRemainingMines(prop) {
-    setRemainingMines(remainingMines + prop);
-  }
 
   useEffect(() => {
     function generateMinePositions() {
@@ -77,6 +73,10 @@ export default function Table({
         {row}
       </div>
     );
+  }
+
+  function handleRemainingMines(prop) {
+    setRemainingMines(remainingMines + prop);
   }
 
   return (

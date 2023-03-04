@@ -22,6 +22,10 @@ function App() {
     setScores(newScores);
   }
 
+  function resetScores() {
+    setScores([]);
+  }
+
   function difficultSelected(difficult) {
     setDifficult(difficult);
     setTableKey(tableKey + 1);
@@ -103,6 +107,11 @@ function App() {
           <div className="scores">
             <h2>Ranking scores</h2>
             <RankingScores scores={scores} />
+            {scores.length > 0 && (
+              <button onClick={resetScores} className="resetScores">
+                Reset scores
+              </button>
+            )}
           </div>
         </div>
 

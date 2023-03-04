@@ -93,6 +93,12 @@
   min-height: 55vh;
 }
 
+.resetScores {
+  margin-top: 15px;
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
 .divTable {
   display: flex;
   justify-content: center;

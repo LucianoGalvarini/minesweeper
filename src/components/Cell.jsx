@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/cell.css";
+import { numberStyles } from "../utilities/constants";
 
 export default function Cell({
   hasMine,
@@ -41,16 +42,6 @@ export default function Cell({
       if (hasMine) {
         return "💣";
       } else if (nearbyMines > 0) {
-        const numberStyles = {
-          1: { color: "#0000FF" },
-          2: { color: "#008000" },
-          3: { color: "#FF0000" },
-          4: { color: "#020082" },
-          5: { color: "#7c0000" },
-          6: { color: "#077984" },
-          7: { color: "#a8060c" },
-          8: { color: "#ae040f" },
-        };
         return (
           <span
             style={numberStyles[nearbyMines]}
