@@ -7,7 +7,7 @@ import Message from "./components/Message";
 import Button from "./components/Button";
 
 function App() {
-  const levels = ["easy", "medium", "hard"];
+  const levels = ["Easy", "Medium", "Hard"];
   const [difficult, setDifficult] = useState("");
   const [tableKey, setTableKey] = useState(0);
   const [gameStart, setGameStart] = useState(false);
@@ -81,7 +81,7 @@ function App() {
               </p>
             ) : (
               <p>
-                Difficult: <strong>unselected</strong>
+                Difficult: <strong>Unselected</strong>
               </p>
             )}
           </div>
@@ -98,11 +98,17 @@ function App() {
           ) : (
             <div>
               {gameOver ? (
-                <Message msg={"GAME OVER"} styleClass={"gameOver"} />
+                <Message
+                  msg={"Sorry, you lost this game. Better luck next time!"}
+                  styleClass={"gameOver"}
+                />
               ) : gameWon ? (
-                <Message msg={"YOU WIN!"} styleClass={"gameWon"} />
+                <Message
+                  msg={"Congratulations, you won the game!"}
+                  styleClass={"gameWon"}
+                />
               ) : (
-                <Message msg={"PLAYING"} styleClass={"playing"} />
+                <Message msg={"Playing"} styleClass={"playing"} />
               )}
             </div>
           )}
