@@ -70,6 +70,7 @@ export default function Table({
           firstClick={firstClick}
           setFirstClick={setFirstClick}
           generateMinePositions={generateMinePositions}
+          analyzeWon={analyzeWon}
         />
       );
     }
@@ -80,13 +81,35 @@ export default function Table({
     );
   }
 
+  function analyzeWon() {
+    let revealedDivCount = 1; // Mover la variable dentro de la función
+
+    if (firstClick) {
+      const tableDiv = document.getElementById("table");
+      const divs = tableDiv.querySelectorAll("div");
+      divs.forEach((element) => {
+        if (element.classList.contains("revealed")) {
+          revealedDivCount++;
+        }
+      });
+    }
+
+    if (revealedDivCount === rows * cols - mines) {
+      // Verificar si no hay más celdas por abrir
+      handleGameWon();
+    }
+    console.log(rows * cols - mines, revealedDivCount);
+  }
+
   function handleRemainingMines(prop) {
     setRemainingMines(remainingMines + prop);
   }
 
   return (
     <div>
-      <div className="table">{table}</div>
+      <div className="table" id="table">
+        {table}
+      </div>
       <div>
         <h2>💣 {remainingMines}</h2>
       </div>

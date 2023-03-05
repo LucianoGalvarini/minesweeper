@@ -13,6 +13,7 @@ export default function Cell({
   firstClick,
   setFirstClick,
   generateMinePositions,
+  analyzeWon,
 }) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
@@ -24,12 +25,14 @@ export default function Cell({
     } else {
       temporizador("start");
     }
-    onGameStart();
-    setIsRevealed(true);
     if (!firstClick) {
       generateMinePositions(cellIndex);
       setFirstClick(true);
     }
+
+    onGameStart();
+    setIsRevealed(true);
+    analyzeWon();
   };
 
   const handleCellRightClick = (e) => {
