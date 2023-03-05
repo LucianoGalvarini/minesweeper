@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Cell from "./Cell";
 import "../styles/table.css";
 import { MINESWEEPER_LEVELS } from "../utilities/constants";
@@ -18,20 +18,21 @@ export default function Table({
   const [minePositions, setMinePositions] = useState([]);
   const [remainingMines, setRemainingMines] = useState(mines);
 
-  useEffect(() => {
-    function generateMinePositions() {
-      const positions = [];
-      while (positions.length < mines) {
-        const randomPosition = Math.floor(Math.random() * (rows * cols));
-        if (!positions.includes(randomPosition)) {
-          positions.push(randomPosition);
-        }
-      }
-      setMinePositions(positions);
-    }
+  const [firstClick, setFirstClick] = useState(false);
 
-    generateMinePositions();
-  }, [mines, rows, cols]);
+  function generateMinePositions(excludedPosition) {
+    const positions = [];
+    while (positions.length < mines) {
+      const randomPosition = Math.floor(Math.random() * (rows * cols));
+      if (
+        randomPosition !== excludedPosition &&
+        !positions.includes(randomPosition)
+      ) {
+        positions.push(randomPosition);
+      }
+    }
+    setMinePositions(positions);
+  }
 
   const countNearbyMines = (i, j, minePositions) => {
     let count = 0;
@@ -65,6 +66,10 @@ export default function Table({
           temporizador={temporizador}
           onGameStart={handleGameStart}
           handleRemainingMines={handleRemainingMines}
+          cellIndex={cellIndex}
+          firstClick={firstClick}
+          setFirstClick={setFirstClick}
+          generateMinePositions={generateMinePositions}
         />
       );
     }

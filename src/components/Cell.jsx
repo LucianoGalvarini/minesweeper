@@ -9,6 +9,10 @@ export default function Cell({
   temporizador,
   onGameStart,
   handleRemainingMines,
+  cellIndex,
+  firstClick,
+  setFirstClick,
+  generateMinePositions,
 }) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
@@ -22,6 +26,10 @@ export default function Cell({
     }
     onGameStart();
     setIsRevealed(true);
+    if (!firstClick) {
+      generateMinePositions(cellIndex);
+      setFirstClick(true);
+    }
   };
 
   const handleCellRightClick = (e) => {
