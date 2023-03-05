@@ -85,7 +85,12 @@ function App() {
               </p>
             )}
           </div>
-          {!gameStart ? (
+          {difficult === "" ? (
+            <Message
+              msg={`Waiting for you to choose difficulty`}
+              styleClass={"chooseDifficulty"}
+            />
+          ) : !gameStart ? (
             <Message
               msg={`Click on any cell to start playing`}
               styleClass={"startPlaying"}
