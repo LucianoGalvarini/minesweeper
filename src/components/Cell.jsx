@@ -26,9 +26,9 @@ export default function Cell({
   }, [gameWon, temporizador, gameOver]);
 
   const handleCellClick = () => {
-    // if (gameWon || gameOver) {
-    //   return;
-    // }
+    if (gameWon || gameOver) {
+      return;
+    }
     if (hasMine) {
       temporizador("stop");
       onGameOver();
