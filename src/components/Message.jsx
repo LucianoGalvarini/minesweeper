@@ -1,21 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "../App.css";
 
 export default function Message({ msg, styleClass }) {
-  const message = "Click on any cell to start playing";
+  const msgRef = useRef(null);
 
   useEffect(() => {
-    if (msg === message) {
-      let msgId = document.getElementById("msg");
-      msgId.innerHTML = "Click on any cell <br> to start playing";
+    let words = msg.split(" ");
+    if (words.length > 4) {
+      let truncatedMsg = words.slice(0, 4).join(" ");
+      let restOfMsg = words.slice(4).join(" ");
+      msgRef.current.innerHTML = `${truncatedMsg}<br>${restOfMsg}`;
+    } else {
+      msgRef.current.innerText = msg;
     }
-  }, [msg, message]);
+  }, [msg]);
 
   return (
-    <h3
-      id="msg"
-      className={styleClass}
-      dangerouslySetInnerHTML={{ __html: msg }}
-    />
+    <h3 id="msg" className={styleClass} ref={msgRef}>
+      {msg}
+    </h3>
   );
 }

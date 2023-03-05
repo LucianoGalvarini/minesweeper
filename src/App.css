@@ -56,7 +56,7 @@
 .buttons button:hover {
   cursor: pointer;
 }
-
+.chooseDifficulty,
 .startPlaying,
 .gameOver,
 .playing {
