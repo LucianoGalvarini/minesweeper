@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/cell.css";
 import { numberStyles } from "../utilities/constants";
 
@@ -7,6 +7,8 @@ export default function Cell({
   nearbyMines,
   onGameOver,
   temporizador,
+  gameWon,
+  gameOver,
   onGameStart,
   handleRemainingMines,
   cellIndex,
@@ -18,13 +20,20 @@ export default function Cell({
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
 
+  useEffect(() => {
+    if (gameWon) temporizador("won");
+    if (gameWon || gameOver) setIsRevealed(true);
+  }, [gameWon, temporizador, gameOver]);
+
   const handleCellClick = () => {
+    // if (gameWon || gameOver) {
+    //   return;
+    // }
     if (hasMine) {
       temporizador("stop");
       onGameOver();
-    } else {
-      temporizador("start");
-    }
+    } else temporizador("start");
+
     if (!firstClick) {
       generateMinePositions(cellIndex);
       setFirstClick(true);
@@ -49,7 +58,7 @@ export default function Cell({
   };
 
   const renderContent = () => {
-    if (isRevealed) {
+    if (isRevealed || gameWon || gameOver) {
       if (hasMine) {
         return "💣";
       } else if (nearbyMines > 0) {

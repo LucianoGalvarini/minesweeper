@@ -118,9 +118,11 @@ function App() {
         <div className="divTable">
           {difficult !== "" ? (
             <Table
-              difficult={difficult}
               key={tableKey}
+              difficult={difficult}
               handleGameWon={handleGameWon}
+              gameWon={gameWon}
+              gameOver={gameOver}
               handleGameStart={handleGameStart}
               handleGameOver={handleGameOver}
               temporizador={temporizador}

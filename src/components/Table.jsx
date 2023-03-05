@@ -6,6 +6,8 @@ import { MINESWEEPER_LEVELS } from "../utilities/constants";
 export default function Table({
   difficult,
   handleGameWon,
+  gameWon,
+  gameOver,
   handleGameOver,
   handleGameStart,
   temporizador,
@@ -64,6 +66,8 @@ export default function Table({
           nearbyMines={nearbyMines}
           onGameOver={handleGameOver}
           temporizador={temporizador}
+          gameWon={gameWon}
+          gameOver={gameOver}
           onGameStart={handleGameStart}
           handleRemainingMines={handleRemainingMines}
           cellIndex={cellIndex}
@@ -82,7 +86,7 @@ export default function Table({
   }
 
   function analyzeWon() {
-    let revealedDivCount = 1; // Mover la variable dentro de la función
+    let revealedDivCount = 1;
 
     if (firstClick) {
       const tableDiv = document.getElementById("table");
@@ -95,10 +99,8 @@ export default function Table({
     }
 
     if (revealedDivCount === rows * cols - mines) {
-      // Verificar si no hay más celdas por abrir
       handleGameWon();
     }
-    console.log(rows * cols - mines, revealedDivCount);
   }
 
   function handleRemainingMines(prop) {
