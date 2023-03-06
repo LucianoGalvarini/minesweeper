@@ -10,7 +10,7 @@ export default function Table({
   gameOver,
   handleGameOver,
   handleGameStart,
-  temporizador,
+  timer,
 }) {
   const levelSelected = MINESWEEPER_LEVELS[difficult];
   const rows = levelSelected.rows;
@@ -21,6 +21,8 @@ export default function Table({
   const [remainingMines, setRemainingMines] = useState(mines);
 
   const [firstClick, setFirstClick] = useState(false);
+
+  /* ------------------------- Generate mines after the first click ------------------------- */
 
   function generateMinePositions(excludedPosition) {
     const positions = [];
@@ -35,6 +37,8 @@ export default function Table({
     }
     setMinePositions(positions);
   }
+
+  /* ------------------------- Counts the number of mines around the cell. ------------------------- */
 
   const countNearbyMines = (i, j, minePositions) => {
     let count = 0;
@@ -51,39 +55,7 @@ export default function Table({
     return count;
   };
 
-  let table = [];
-
-  for (let i = 0; i < rows; i++) {
-    const row = [];
-    for (let j = 0; j < cols; j++) {
-      const cellIndex = i * cols + j;
-      const hasMine = minePositions.includes(cellIndex);
-      const nearbyMines = countNearbyMines(i, j, minePositions);
-      row.push(
-        <Cell
-          key={`${i}-${j}`}
-          hasMine={hasMine}
-          nearbyMines={nearbyMines}
-          onGameOver={handleGameOver}
-          temporizador={temporizador}
-          gameWon={gameWon}
-          gameOver={gameOver}
-          onGameStart={handleGameStart}
-          handleRemainingMines={handleRemainingMines}
-          cellIndex={cellIndex}
-          firstClick={firstClick}
-          setFirstClick={setFirstClick}
-          generateMinePositions={generateMinePositions}
-          analyzeWon={analyzeWon}
-        />
-      );
-    }
-    table.push(
-      <div key={i} className="row">
-        {row}
-      </div>
-    );
-  }
+  /* ------------------------- Analyzes whether the game has already been won ------------------------- */
 
   function analyzeWon() {
     let revealedDivCount = 1;
@@ -103,8 +75,46 @@ export default function Table({
     }
   }
 
+  /* ------------------------- Analyzes the number of mines remaining ------------------------- */
+
   function handleRemainingMines(prop) {
     setRemainingMines(remainingMines + prop);
+  }
+
+  /* ------------------------- /////////////////////////////////////// ------------------------- */
+
+  let table = [];
+
+  for (let i = 0; i < rows; i++) {
+    const row = [];
+    for (let j = 0; j < cols; j++) {
+      const cellIndex = i * cols + j;
+      const hasMine = minePositions.includes(cellIndex);
+      const nearbyMines = countNearbyMines(i, j, minePositions);
+      row.push(
+        <Cell
+          key={`${i}-${j}`}
+          hasMine={hasMine}
+          nearbyMines={nearbyMines}
+          onGameOver={handleGameOver}
+          timer={timer}
+          gameWon={gameWon}
+          gameOver={gameOver}
+          onGameStart={handleGameStart}
+          handleRemainingMines={handleRemainingMines}
+          cellIndex={cellIndex}
+          firstClick={firstClick}
+          setFirstClick={setFirstClick}
+          generateMinePositions={generateMinePositions}
+          analyzeWon={analyzeWon}
+        />
+      );
+    }
+    table.push(
+      <div key={i} className="row">
+        {row}
+      </div>
+    );
   }
 
   return (

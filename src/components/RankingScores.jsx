@@ -19,7 +19,7 @@ const RankingScores = ({ scores }) => {
       <tbody>
         {scores.map((score, index) => (
           <tr key={index}>
-            <td> {index + 1} </td>
+            <td>{index + 1}</td>
             <td>{formatearTiempo(score.time)}</td>
             <td>{formattedDate}</td>
           </tr>

@@ -43,7 +43,7 @@ function App() {
     setGameStart(true);
   }
 
-  function temporizador(props) {
+  function timer(props) {
     setTemp(props);
   }
 
@@ -136,7 +136,7 @@ function App() {
               gameOver={gameOver}
               handleGameStart={handleGameStart}
               handleGameOver={handleGameOver}
-              temporizador={temporizador}
+              timer={timer}
             />
           ) : (
             <h1>Choose a difficulty</h1>

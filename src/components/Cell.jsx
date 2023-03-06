@@ -6,7 +6,7 @@ export default function Cell({
   hasMine,
   nearbyMines,
   onGameOver,
-  temporizador,
+  timer,
   gameWon,
   gameOver,
   onGameStart,
@@ -21,18 +21,18 @@ export default function Cell({
   const [isFlagged, setIsFlagged] = useState(false);
 
   useEffect(() => {
-    if (gameWon) temporizador("won");
+    if (gameWon) timer("won");
     if (gameWon || gameOver) setIsRevealed(true);
-  }, [gameWon, temporizador, gameOver]);
+  }, [gameWon, timer, gameOver]);
 
   const handleCellClick = () => {
     if (gameWon || gameOver) {
       return;
     }
     if (hasMine) {
-      temporizador("stop");
+      timer("stop");
       onGameOver();
-    } else temporizador("start");
+    } else timer("start");
 
     if (!firstClick) {
       generateMinePositions(cellIndex);
@@ -48,7 +48,7 @@ export default function Cell({
     e.preventDefault();
     if (!isRevealed) {
       setIsFlagged(!isFlagged);
-      temporizador("start");
+      timer("start");
       if (!isFlagged) {
         handleRemainingMines(-1);
       } else {
