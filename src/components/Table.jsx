@@ -60,6 +60,7 @@ export default function Table({
         }
       }
     }
+
     neighboringCells.unshift(cellIndex);
 
     return neighboringCells;

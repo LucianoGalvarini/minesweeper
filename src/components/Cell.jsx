@@ -26,12 +26,12 @@ export default function Cell({
     if (gameWon || gameOver) setIsRevealed(true);
   }, [gameWon, timer, gameOver]);
 
-  const handleCellClick = () => {
-    if (gameWon || gameOver || isRevealed) {
+  const handleCellClick = (index) => {
+    if (gameWon || gameOver || isRevealed || isFlagged) {
       return;
     }
 
-    const cellExcluded = getNeighboringCells(cellIndex);
+    const cellExcluded = getNeighboringCells(index);
 
     if (hasMine) {
       timer("stop");
@@ -41,29 +41,17 @@ export default function Cell({
         generateMinePositions(cellExcluded);
         setFirstClick(true);
       }
-      onGameStart();
-      setIsRevealed(true);
-      timer("start");
+    }
 
-      if (nearbyMines === 0) {
-        cellExcluded.shift();
+    onGameStart();
+    setIsRevealed(true);
+    timer("start");
+    analyzeWon();
 
-        cellExcluded.forEach((cell) => {
-          const cellComponent = document.getElementById(`cell-${cell}`);
-          if (cellComponent && !cellComponent.classList.contains("revealed")) {
-            handleAutoReveal(cell);
-          }
-        });
-      }
-
-      analyzeWon();
+    if (nearbyMines === 0) {
+      cellExcluded.forEach((cell) => {});
     }
   };
-
-  function handleAutoReveal(cell) {
-    const cellComponent = document.getElementById(`cell-${cell}`);
-    cellComponent.click();
-  }
 
   const handleCellRightClick = (e) => {
     e.preventDefault();
@@ -83,11 +71,7 @@ export default function Cell({
       if (hasMine) {
         return "💣";
       } else if (nearbyMines > 0) {
-        return (
-          <span style={numberStyles[nearbyMines]} className={`cell revealed`}>
-            {nearbyMines}
-          </span>
-        );
+        return <span style={numberStyles[nearbyMines]}>{nearbyMines}</span>;
       }
     } else if (isFlagged) {
       return "🚩";
@@ -98,7 +82,7 @@ export default function Cell({
   return (
     <div
       className={`cell ${isRevealed ? "revealed" : ""}`}
-      onClick={handleCellClick}
+      onClick={() => handleCellClick(cellIndex)}
       onContextMenu={handleCellRightClick}
       id={`cell-${cellIndex}`}
     >
