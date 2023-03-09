@@ -16,6 +16,7 @@ export default function Cell({
   setFirstClick,
   generateMinePositions,
   analyzeWon,
+  getNeighboringCells,
 }) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
@@ -26,23 +27,43 @@ export default function Cell({
   }, [gameWon, timer, gameOver]);
 
   const handleCellClick = () => {
-    if (gameWon || gameOver) {
+    if (gameWon || gameOver || isRevealed) {
       return;
     }
+
+    const cellExcluded = getNeighboringCells(cellIndex);
+
     if (hasMine) {
       timer("stop");
       onGameOver();
-    } else timer("start");
+    } else {
+      if (!firstClick) {
+        generateMinePositions(cellExcluded);
+        setFirstClick(true);
+      }
+      onGameStart();
+      setIsRevealed(true);
+      timer("start");
 
-    if (!firstClick) {
-      generateMinePositions(cellIndex);
-      setFirstClick(true);
+      if (nearbyMines === 0) {
+        cellExcluded.shift();
+
+        cellExcluded.forEach((cell) => {
+          const cellComponent = document.getElementById(`cell-${cell}`);
+          if (cellComponent && !cellComponent.classList.contains("revealed")) {
+            handleAutoReveal(cell);
+          }
+        });
+      }
+
+      analyzeWon();
     }
-
-    onGameStart();
-    setIsRevealed(true);
-    analyzeWon();
   };
+
+  function handleAutoReveal(cell) {
+    const cellComponent = document.getElementById(`cell-${cell}`);
+    cellComponent.click();
+  }
 
   const handleCellRightClick = (e) => {
     e.preventDefault();
@@ -63,10 +84,7 @@ export default function Cell({
         return "💣";
       } else if (nearbyMines > 0) {
         return (
-          <span
-            style={numberStyles[nearbyMines]}
-            className={`cell revealed ${nearbyMines}`}
-          >
+          <span style={numberStyles[nearbyMines]} className={`cell revealed`}>
             {nearbyMines}
           </span>
         );
@@ -82,6 +100,7 @@ export default function Cell({
       className={`cell ${isRevealed ? "revealed" : ""}`}
       onClick={handleCellClick}
       onContextMenu={handleCellRightClick}
+      id={`cell-${cellIndex}`}
     >
       {renderContent()}
     </div>

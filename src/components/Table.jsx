@@ -24,18 +24,45 @@ export default function Table({
 
   /* ------------------------- Generate mines after the first click ------------------------- */
 
-  function generateMinePositions(excludedPosition) {
+  function generateMinePositions(excludedPositions) {
     const positions = [];
     while (positions.length < mines) {
       const randomPosition = Math.floor(Math.random() * (rows * cols));
       if (
-        randomPosition !== excludedPosition &&
+        !excludedPositions.includes(randomPosition) &&
         !positions.includes(randomPosition)
       ) {
         positions.push(randomPosition);
       }
     }
     setMinePositions(positions);
+  }
+
+  function getNeighboringCells(cellIndex) {
+    const neighboringCells = [];
+    const row = Math.floor(cellIndex / cols);
+    const col = cellIndex % cols;
+
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) {
+          continue;
+        }
+        const neighborRow = row + i;
+        const neighborCol = col + j;
+        if (
+          neighborRow >= 0 &&
+          neighborRow < rows &&
+          neighborCol >= 0 &&
+          neighborCol < cols
+        ) {
+          neighboringCells.push(neighborRow * cols + neighborCol);
+        }
+      }
+    }
+    neighboringCells.unshift(cellIndex);
+
+    return neighboringCells;
   }
 
   /* ------------------------- Counts the number of mines around the cell. ------------------------- */
@@ -107,6 +134,7 @@ export default function Table({
           setFirstClick={setFirstClick}
           generateMinePositions={generateMinePositions}
           analyzeWon={analyzeWon}
+          getNeighboringCells={getNeighboringCells}
         />
       );
     }
