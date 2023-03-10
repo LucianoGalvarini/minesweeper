@@ -20,6 +20,7 @@ export default function Cell({
 }) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
+  const cellExcluded = getNeighboringCells(cellIndex);
 
   useEffect(() => {
     if (gameWon) timer("won");
@@ -30,8 +31,6 @@ export default function Cell({
     if (gameWon || gameOver || isRevealed || isFlagged) {
       return;
     }
-
-    const cellExcluded = getNeighboringCells(cellIndex);
 
     if (hasMine) {
       timer("stop");
@@ -47,29 +46,7 @@ export default function Cell({
     setIsRevealed(true);
     timer("start");
     analyzeWon();
-
-    // if (nearbyMines === 0) {
-    //   cellExcluded.forEach((cell) => {
-    //     handleCellReveal(cell);
-    //   });
-    // }
   };
-
-  // const handleCellReveal = (cell) => {
-  //   const cellComponent = document.getElementById(`cell-${cell.index}`);
-  //   cellComponent.classList.add("revealed");
-
-  //   let numberNearbyMines = cell.nearbyMines;
-
-  //   if (cell.nearbyMines !== 0) {
-  //     cellComponent.innerHTML = `
-  //     <span id=span-${cell.index}>${numberNearbyMines}</span>
-  //     `;
-
-  //     const spanComponent = document.getElementById(`span-${cell.index}`);
-  //     Object.assign(spanComponent.style, numberStyles[cell.nearbyMines]);
-  //   }
-  // };
 
   const handleCellRightClick = (e) => {
     e.preventDefault();
