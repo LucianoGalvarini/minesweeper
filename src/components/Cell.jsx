@@ -26,19 +26,19 @@ export default function Cell({
     if (gameWon || gameOver) setIsRevealed(true);
   }, [gameWon, timer, gameOver]);
 
-  const handleCellClick = (index) => {
+  const handleCellClick = () => {
     if (gameWon || gameOver || isRevealed || isFlagged) {
       return;
     }
 
-    const cellExcluded = getNeighboringCells(index);
+    const cellExcluded = getNeighboringCells(cellIndex);
 
     if (hasMine) {
       timer("stop");
       onGameOver();
     } else {
       if (!firstClick) {
-        generateMinePositions(cellExcluded);
+        generateMinePositions(cellExcluded.map((cell) => cell.index));
         setFirstClick(true);
       }
     }
@@ -49,9 +49,14 @@ export default function Cell({
     analyzeWon();
 
     if (nearbyMines === 0) {
-      cellExcluded.forEach((cell) => {});
+      cellExcluded.shift();
+      cellExcluded.forEach((cell) => {
+        handleCellReveal(cell);
+      });
     }
   };
+
+  const handleCellReveal = (cell) => {};
 
   const handleCellRightClick = (e) => {
     e.preventDefault();
@@ -82,7 +87,7 @@ export default function Cell({
   return (
     <div
       className={`cell ${isRevealed ? "revealed" : ""}`}
-      onClick={() => handleCellClick(cellIndex)}
+      onClick={handleCellClick}
       onContextMenu={handleCellRightClick}
       id={`cell-${cellIndex}`}
     >

@@ -43,6 +43,8 @@ export default function Table({
     const row = Math.floor(cellIndex / cols);
     const col = cellIndex % cols;
 
+    neighboringCells.push({ index: cellIndex, nearbyMines: 0 });
+
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
         if (i === 0 && j === 0) {
@@ -56,12 +58,16 @@ export default function Table({
           neighborCol >= 0 &&
           neighborCol < cols
         ) {
-          neighboringCells.push(neighborRow * cols + neighborCol);
+          const index = neighborRow * cols + neighborCol;
+          const nearbyMines = countNearbyMines(
+            neighborRow,
+            neighborCol,
+            minePositions
+          );
+          neighboringCells.push({ index, nearbyMines });
         }
       }
     }
-
-    neighboringCells.unshift(cellIndex);
 
     return neighboringCells;
   }
