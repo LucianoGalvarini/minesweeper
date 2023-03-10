@@ -32,6 +32,9 @@ export default function Cell({
     }
 
     const cellExcluded = getNeighboringCells(cellIndex);
+    // console.log(cellExcluded);
+
+    // console.log(cellExcluded.map((cell) => cell.index));
 
     if (hasMine) {
       timer("stop");
@@ -56,7 +59,20 @@ export default function Cell({
     }
   };
 
-  const handleCellReveal = (cell) => {};
+  const handleCellReveal = (cell) => {
+    const cellComponent = document.getElementById(`cell-${cell.index}`);
+
+    cellComponent.classList.add("revealed");
+
+    if (cell.nearbyMines === 0) cell.nearbyMines = "";
+
+    cellComponent.innerHTML = `
+    <span id=span-${cell.index} >${cell.nearbyMines}</span>
+    `;
+
+    const spanComponent = document.getElementById(`span-${cell.index}`);
+    Object.assign(spanComponent.style, numberStyles[cell.nearbyMines]);
+  };
 
   const handleCellRightClick = (e) => {
     e.preventDefault();
