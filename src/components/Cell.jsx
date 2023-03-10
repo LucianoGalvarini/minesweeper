@@ -61,14 +61,14 @@ export default function Cell({
 
   //   let numberNearbyMines = cell.nearbyMines;
 
-  //   if (cell.nearbyMines === 0) numberNearbyMines = "";
+  //   if (cell.nearbyMines !== 0) {
+  //     cellComponent.innerHTML = `
+  //     <span id=span-${cell.index}>${numberNearbyMines}</span>
+  //     `;
 
-  //   cellComponent.innerHTML = `
-  //   <span id=span-${cell.index}>${numberNearbyMines}</span>
-  //   `;
-
-  //   const spanComponent = document.getElementById(`span-${cell.index}`);
-  //   Object.assign(spanComponent.style, numberStyles[cell.nearbyMines]);
+  //     const spanComponent = document.getElementById(`span-${cell.index}`);
+  //     Object.assign(spanComponent.style, numberStyles[cell.nearbyMines]);
+  //   }
   // };
 
   const handleCellRightClick = (e) => {
