@@ -40,11 +40,11 @@ export default function Cell({
         generateMinePositions(cellExcluded.map((cell) => cell.index));
         setFirstClick(true);
       }
+      timer("start");
     }
 
     onGameStart();
     setIsRevealed(true);
-    timer("start");
     analyzeWon();
   };
 
